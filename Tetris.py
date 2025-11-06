@@ -70,6 +70,11 @@ COLORES_PIEZAS = [
 pantalla = pygame.display.set_mode((ANCHO, ALTO)) 
 pygame.display.set_caption("Tetris Game - Mejorado")
 
+# Variables globales para fuentes
+fuente = None
+fuente_game_over = None
+fuente_pista = None
+
 # Configuración de audio
 def cargar_audio():
     """Cargar recursos de audio"""
@@ -748,12 +753,12 @@ def dibujar_pieza(pieza, pantalla, offset_x=0, offset_y=0, alpha=255):
                 pygame.draw.rect(pantalla, pieza.color, celda_rect)
                 pygame.draw.rect(pantalla, COLOR_BORDE, celda_rect, 1)
 
-def dibujar_menu_principal():
+def dibujar_menu_principal(juego):
     pantalla.fill(COLOR_FONDO)
     
     # Título animado
     tiempo = pygame.time.get_ticks() / 1000
-    titulo = fuente_game_over.render("TETRIS ESPACIAL", True, BLANCO)
+    titulo = juego.fuente_grande.render("TETRIS", True, BLANCO)
     titulo_rect = titulo.get_rect(center=(ANCHO//2, 100))
     
     surf_temp = pygame.Surface(titulo.get_size(), pygame.SRCALPHA)
@@ -769,7 +774,7 @@ def dibujar_menu_principal():
     pygame.draw.rect(pantalla, color_boton, boton_jugar, border_radius=12)
     pygame.draw.rect(pantalla, BLANCO, boton_jugar, 3, border_radius=12)
     
-    texto_jugar = fuente.render("JUGAR", True, BLANCO)
+    texto_jugar = juego.fuente.render("JUGAR", True, BLANCO)
     texto_rect = texto_jugar.get_rect(center=boton_jugar.center)
     pantalla.blit(texto_jugar, texto_rect)
     
@@ -785,7 +790,7 @@ def dibujar_menu_principal():
     ]
     
     for i, linea in enumerate(instrucciones):
-        texto = fuente_pista.render(linea, True, BLANCO)
+        texto = juego.fuente_pista.render(linea, True, BLANCO)
         pantalla.blit(texto, (ANCHO//2 - texto.get_width()//2, 400 + i * 25))
     
     # Efecto de partículas ocasionales
@@ -1148,7 +1153,7 @@ class Juego:
         self.pantalla.fill(COLOR_FONDO)
         
         if self.estado_juego == "menu":
-            dibujar_menu_principal()
+            dibujar_menu_principal(self)  # Pasar self como parámetro
             # Mostrar tabla de puntuaciones en el menú
             self.puntuaciones.dibujar_tabla_puntuaciones(self.pantalla, self.fuente, 50, 200)
             
@@ -1346,11 +1351,6 @@ class Juego:
             self.actualizar()
             self.dibujar()
             self.reloj.tick(FPS)
-
-# Variables globales para fuentes
-fuente = None
-fuente_game_over = None
-fuente_pista = None
 
 def main():
     """Función principal con manejo de errores"""
