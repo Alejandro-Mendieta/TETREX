@@ -1,5 +1,7 @@
 # 🎮 Tetris 
 
+<img width="901" height="636" alt="image" src="https://github.com/Alejandro-Mendieta/TETREX/blob/main/ASSETS/FOTOS/FOTO1.png?raw=true" />
+
 ## 🌟 Descripción
 **Tetris Espacial** es una versión mejorada del clásico juego Tetris con temática espacial y efectos visuales neon. Desarrollado en Python usando Pygame, incluye características modernas como sistema de hold, rotaciones SRS, efectos de partículas y estadísticas detalladas.
 
